@@ -1,6 +1,10 @@
 import 'package:academy_app/screens/edit_password_screen.dart';
 import 'package:academy_app/screens/edit_profile_screen.dart';
+import 'package:academy_app/screens/language_screen.dart';
 import 'package:academy_app/screens/wallet_screen.dart';
+import 'package:academy_app/utils/language/languageDeligate.dart';
+import 'package:academy_app/utils/language/languageEn.dart';
+import 'package:academy_app/utils/language/words.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../constants.dart';
@@ -9,10 +13,12 @@ import '../widgets/custom_text.dart';
 import '../widgets/acoount_list_tile.dart';
 
 class AccountScreen extends StatelessWidget {
-
+  final _key = GlobalKey();
   @override
   Widget build(BuildContext context) {
+
     return FutureBuilder(
+      key:_key ,
       future: Provider.of<Auth>(context, listen: false).getUserInfo(),
       builder: (ctx, dataSnapshot) {
         if (dataSnapshot.connectionState == ConnectionState.waiting) {
@@ -77,7 +83,7 @@ class AccountScreen extends StatelessWidget {
                               children: <Widget>[
                                 GestureDetector(
                                   child: AccountListTile(
-                                    titleText: 'Edit Profile',
+                                    titleText: '${getPrimaryLanguage().edit_profile}',
                                     icon: Icons.account_circle,
                                     actionType: 'edit',
                                   ),
@@ -106,6 +112,17 @@ class AccountScreen extends StatelessWidget {
                                   ),
                                   onTap: () {
                                     Navigator.of(context).pushNamed(WalletScreen.routeName);
+                                  },
+                                ),
+                                Divider(),
+                                GestureDetector(
+                                  child: AccountListTile(
+                                    titleText: 'Language',
+                                    icon: Icons.g_translate,
+                                    actionType: 'language',
+                                  ),
+                                  onTap: () {
+                                    Navigator.of(context).pushNamed(LanguageScreen.routeName,arguments:_key );
                                   },
                                 ),
                                 Divider(),

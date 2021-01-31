@@ -1,4 +1,5 @@
 import 'package:academy_app/models/user.dart';
+import 'package:academy_app/screens/language_screen.dart';
 import 'package:academy_app/screens/wallet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -31,6 +32,8 @@ class AccountListTile extends StatelessWidget {
     }
     else if (actionType == 'wallet') {
       Navigator.of(context).pushNamed(WalletScreen.routeName,arguments: user);
+    }else if(actionType=='language'){
+      Navigator.of(context).pushNamed(LanguageScreen.routeName);
     }
 
 

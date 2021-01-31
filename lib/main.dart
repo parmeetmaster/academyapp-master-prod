@@ -1,6 +1,7 @@
 import 'package:academy_app/providers/wallet.dart';
 import 'package:academy_app/screens/my_course_download_screen.dart';
 import 'package:academy_app/screens/wallet_screen.dart';
+import 'package:academy_app/utils/preference.dart';
 import 'package:academy_app/widgets/search_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -22,17 +23,18 @@ import './screens/webview_screen_iframe.dart';
 import './screens/temp_view_screen.dart';
 import './providers/misc_provider.dart';
 import './providers/my_courses.dart';
+import 'screens/language_screen.dart';
 
 void main() async {
   // SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
   //   statusBarColor: Colors.transparent,
   //   statusBarBrightness: Brightness.light,
   // ));
-
   WidgetsFlutterBinding.ensureInitialized();
   await FlutterDownloader.initialize(
     debug: true
   );
+  await Preference.load();
   runApp(MyApp());
 }
 
@@ -95,6 +97,7 @@ class MyApp extends StatelessWidget {
                     AuthScreen.routeName: (ctx) => AuthScreen(),
                     LoginScreen.routeName: (ctx) => LoginScreen(),
                     WalletScreen.routeName:(ctx)=>WalletScreen(),
+                    LanguageScreen.routeName:(ctx)=>LanguageScreen(),
                     WebviewScreen.routeName: (ctx) => WebviewScreen(),
                     WebviewScreenIframe.routeName: (ctx) =>
                         WebviewScreenIframe(),
