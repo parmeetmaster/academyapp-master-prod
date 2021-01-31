@@ -105,7 +105,7 @@ class AccountScreen extends StatelessWidget {
                                     actionType: 'wallet',
                                   ),
                                   onTap: () {
-                                    Navigator.of(context).pushNamed(WalletScreen.routeName,arguments: user);
+                                    Navigator.of(context).pushNamed(WalletScreen.routeName);
                                   },
                                 ),
                                 Divider(),

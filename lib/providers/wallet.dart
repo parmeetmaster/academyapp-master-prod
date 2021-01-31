@@ -9,10 +9,12 @@ import 'package:provider/provider.dart';
 import '../constants.dart';
 import 'package:http/http.dart' as http;
 
+import 'auth.dart';
+
 class Wallet extends ChangeNotifier {
 
   String curruncyPrefix = "";
-  String curruncyName = "HTG";
+  String curruncyName = "HTGm";
   String balance = "20000";
   String earnings = "0.00";
   String referalsCount = "0";
@@ -21,13 +23,16 @@ class Wallet extends ChangeNotifier {
 
   var completeStatus = "UnCompleted";
 
-  Future<bool> getWalletInfo([User user]) async {
+  Future<void> getWalletInfo(BuildContext context) async {
+
+    final user=Provider.of<Auth>(context).user;
+
     final url ='https://baseacademie.com/api/v2/user/profile/3049';
   //  final url ='https://baseacademie.com/api/v2/user/profile/${user.id}';
 
     final response = await http.get(url);
 
-    final responseData = json.decode(response.body);
+    final responseData = await json.decode(response.body);
 
 
 
@@ -36,11 +41,24 @@ class Wallet extends ChangeNotifier {
   }
 
 
-   balance= responseData["wallet"]["balance"];
+   this.balance= "5000";
+/*
     curruncyName= responseData["wallet_settings"]["currency"];
+     earnings = responseData["earnings"]["earnings"];
+        if(earnings=null) earnings="0";
+             else {earnings=earnings.toString();}
+    String referalsCount =  responseData["earnings"]["total_referrals"];
+
+*/
+
+
     print("resp data ${responseData["wallet"]["balance"]}");
 
+  }
 
-    return true;
+  refresh() {
+    balance="111";
+    notifyListeners();
+
   }
 }
