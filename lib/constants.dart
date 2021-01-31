@@ -21,7 +21,6 @@ const kTabBarBg = Color(0xFFEEEEEE);
 const kTextBlueColor = Color(0xFF5594bf);
 const kFormInputColor = Color(0xFFc7c8ca);
 const kSectionTileColor = Color(0xFFdddcdd);
-
 const kDefaultPadding = 20.0;
 
 const kDefaultInputBorder = OutlineInputBorder(

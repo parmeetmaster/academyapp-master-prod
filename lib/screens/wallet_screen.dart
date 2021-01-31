@@ -1,5 +1,6 @@
 import 'package:academy_app/models/user.dart';
 import 'package:academy_app/models/walletItemModel.dart';
+import 'package:academy_app/providers/auth.dart';
 import 'package:academy_app/providers/wallet.dart';
 import 'package:academy_app/widgets/app_bar_two.dart';
 import 'package:academy_app/widgets/wallet_item.dart';
@@ -11,19 +12,17 @@ import '../constants.dart';
 
 class WalletScreen extends StatelessWidget {
   static const routeName = '/wallet';
-  User user;
 
-  WalletScreen([this.user]);
 
   @override
   Widget build(BuildContext context) {
-    return WalletScreenStateful(user);
+    return WalletScreenStateful();
   }
 }
 
 class WalletScreenStateful extends StatefulWidget {
- User user;
-  WalletScreenStateful(this.user);
+
+  WalletScreenStateful();
   @override
   _WalletScreenStatefulState createState() => _WalletScreenStatefulState();
 }
@@ -33,15 +32,20 @@ class _WalletScreenStatefulState extends State<WalletScreenStateful> {
 
   @override
   Widget build(BuildContext context) {
+
+    final authprovider=Provider.of<Auth>(context);
     final provider=Provider.of<Wallet>(context);
     return Scaffold(
       appBar: CustomAppBarTwo(),
       body: FutureBuilder<bool>(
-        future: provider.getWalletInfo(),
+        future: provider.getWalletInfo(authprovider.user),
         builder: (context, snapshot) {
           return Consumer<Wallet>(
             builder: (context,walletvalue, child) {
-              return Container(
+              if(snapshot==null)
+               return Center(child: CircularProgressIndicator(),);
+                else if(snapshot!=null)
+                return Container(
                 padding: EdgeInsets.symmetric(horizontal: 10),
                 child: Column(
                   children: [
@@ -49,7 +53,6 @@ class _WalletScreenStatefulState extends State<WalletScreenStateful> {
                       height: 10,
                     ),
                     Container(
-
                       width: MediaQuery.of(context).size.width,
                       child: Row(
                         children: [
@@ -258,11 +261,9 @@ class _WalletScreenStatefulState extends State<WalletScreenStateful> {
                                 ((){
                                   List<Widget> ls=[];
                                   for (int i=0;i<100;i++) {
-                                   ls.add(
-                                     WalletItem(walletItemModel(id:"this.id", amount:"20000",type: "his.type", status:"Completed",
+                                   ls.add(WalletItem(walletItemModel(id:"this.id", amount:"20000",type: "his.type", status:"Completed",
                                          createdAt: "$i"
-                                     )),
-                                   );
+                                     )),);
                                 }
                                   return ls;
                                 }())
@@ -278,6 +279,9 @@ class _WalletScreenStatefulState extends State<WalletScreenStateful> {
                   ],
                 ),
               );
+
+
+
             }
           );
         }
