@@ -23,7 +23,12 @@ class _WalletScreenState extends State<WalletScreen> {
 
   @override
   Widget build(BuildContext context) {
+    sharewithReference() {
+      print("clicked");
+      final walletinfo = Provider.of<Wallet>(context, listen: false);
+      Share.share('https://demo.baseacademie.com/register/${walletinfo.referalId}', subject: 'Look what I made!');
 
+    }
 
     final walletProvider=Provider.of<Wallet>(context);
     return Scaffold(
@@ -224,9 +229,12 @@ class _WalletScreenState extends State<WalletScreen> {
                                               padding: EdgeInsets.symmetric(horizontal: 15),
                                               child: Align(
                                                 alignment: Alignment.centerRight,
-                                                child: Icon(Icons.share_outlined,
-                                                size: 30,
-                                                  color: Color.fromRGBO(131,131,131, 1)),
+                                                child: GestureDetector(
+                                                  onTap: sharewithReference,
+                                                  child: Icon(Icons.share_outlined,
+                                                  size: 30,
+                                                    color: Color.fromRGBO(131,131,131, 1)),
+                                                ),
                                                 ),
                                               ),
                                             ),
@@ -274,11 +282,10 @@ class _WalletScreenState extends State<WalletScreen> {
         }
       ),
     );
-  }
 
-  sharewithReference() {
-    final walletinfo = Provider.of<Wallet>(context);
-    Share.share('${walletinfo.referalId}', subject: 'Look what I made!');
+
 
   }
+
+
 }
