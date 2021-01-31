@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:academy_app/models/TransactionItem.dart';
 import 'package:academy_app/models/user.dart';
+import 'package:academy_app/models/walletItemModel.dart';
+import 'package:academy_app/widgets/wallet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,8 +18,9 @@ class Wallet extends ChangeNotifier {
   String balance = "20000";
   String earnings = "0.00";
   String referalsCount = "0";
-   List<dynamic> list;
-  var referalId = "DemoID12345678";
+   List<TransactionItem> list=[];
+  List<Widget> ls=[];
+  var referalId = "1234";
 
   var completeStatus = "UnCompleted";
 
@@ -41,27 +44,28 @@ class Wallet extends ChangeNotifier {
     if (this.earnings == null) {
       this.earnings = "0.00";
     } else {
-      this.curruncyName = "${responseData["earnings"]["earnings"]}";
+      this.earnings = "${responseData["earnings"]["earnings"]}";
     }
+    this.curruncyName = "${responseData["wallet_settings"]["currency"]}";
 
     this.referalsCount="${responseData["earnings"]["total_referrals"]}";
-    this.list=responseData["history"];
-  TransactionItem item=  TransactionItem.fromList(list[0]);
-    print("resp data ${item.description}");
-    /*
-    curruncyName= responseData["wallet_settings"]["currency"];
-     earnings = responseData["earnings"]["earnings"];
-        if(earnings=null) earnings="0";
-             else {earnings=earnings.toString();}
-    String referalsCount =  responseData["earnings"]["total_referrals"];
+    this.referalId="${responseData["wallet"]["ref_code"]}";
+    List<dynamic> temp=responseData["history"];
+ /*   for(int i=0;i<temp.length;i++){
+      list.add(TransactionItem.fromList(temp[i]));
+    }*/
 
-*/
+    for (int i=0;i<temp.length;i++) {
+      TransactionItem item=    TransactionItem.fromList(temp[i]);
+      print(' amount is ${item.amount}');
+      ls.add(WalletItem(walletItemModel(id:item.id, amount:item.amount,type: item.type, status:item.status,
+          createdAt: item.created_at,currency: curruncyName,description: item.description
+      )),);
+    }
 
-    print("resp data ${responseData["wallet"]["balance"]}");
+
+
   }
 
-  refresh() {
-    balance = "111";
-    notifyListeners();
-  }
+
 }

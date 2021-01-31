@@ -19,7 +19,12 @@ TransactionItem.fromList(dynamic listitem){
   amount='${listitem["amount"]}';
   type='${listitem["type"]}';
   channel='${listitem["channel"]}';
-  status='${listitem["status"]}';
+  status= int.parse("${listitem['status']}").toString() ;
+  if(status==1){
+  status='Uncompleted';
+  }else{
+    status='Completed';
+  }
   description='${listitem["description"]}';
   created_at='${listitem["created_at"]}';
 }

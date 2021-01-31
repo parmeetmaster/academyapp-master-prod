@@ -99,6 +99,11 @@ class WalletItem extends StatelessWidget {
 
                           ],
                         ),
+                     Divider(thickness: 1,),
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          child: Text('${_model.description}',style: TextStyle(color: Color.fromRGBO(34,57,126 ,1)),)),
+                     SizedBox(height: 5,)
                       ],
                     ),
                   ),

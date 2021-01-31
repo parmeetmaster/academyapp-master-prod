@@ -12,7 +12,7 @@ class walletItemModel{
   var currency="\$HTG";
 
   walletItemModel({this.id, this.amount, this.type, this.channel, this.status,
-      this.description, this.createdAt});
+      this.description, this.createdAt,this.currency});
 
 
 }

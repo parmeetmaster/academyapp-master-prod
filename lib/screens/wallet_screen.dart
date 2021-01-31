@@ -7,7 +7,7 @@ import 'package:academy_app/widgets/wallet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
-
+import 'package:share/share.dart';
 import '../constants.dart';
 
 
@@ -76,7 +76,6 @@ class _WalletScreenState extends State<WalletScreen> {
                                           crossAxisAlignment: WrapCrossAlignment.start,
                                           children: [
                                             GestureDetector(
-                                             onTap: walletvalue.refresh,
                                               child: Text(
                                                 'Balance',
                                               ),
@@ -252,16 +251,7 @@ class _WalletScreenState extends State<WalletScreen> {
                               child: ConstrainedBox(
                                 constraints:
                                 BoxConstraints(minHeight: viewportConstraints.maxHeight),
-                                child: Column(children:
-                                  ((){
-                                    List<Widget> ls=[];
-                                    for (int i=0;i<100;i++) {
-                                     ls.add(WalletItem(walletItemModel(id:"this.id", amount:"20000",type: "his.type", status:"Completed",
-                                           createdAt: "$i"
-                                       )),);
-                                  }
-                                    return ls;
-                                  }())
+                                child: Column(children:walletvalue.ls
 
                                 ),
                               ),
@@ -284,5 +274,11 @@ class _WalletScreenState extends State<WalletScreen> {
         }
       ),
     );
+  }
+
+  sharewithReference() {
+    final walletinfo = Provider.of<Wallet>(context);
+    Share.share('${walletinfo.referalId}', subject: 'Look what I made!');
+
   }
 }
